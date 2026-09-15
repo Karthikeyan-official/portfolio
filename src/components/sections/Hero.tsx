@@ -2,8 +2,9 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
-import { ArrowRight, Github, Mail, Layers, Zap, Activity, Shield, Database } from "lucide-react";
+import { ArrowRight, Github, Mail } from "lucide-react";
 import { SITE } from "@/lib/site";
+import { ProtectedPhoto } from "@/components/shared/ProtectedPhoto";
 
 /* ─── Static particle data (avoids hydration mismatch) ─────── */
 const PARTICLES = Array.from({ length: 50 }, (_, i) => ({
@@ -19,162 +20,48 @@ const PARTICLES = Array.from({ length: 50 }, (_, i) => ({
 
 const codeLines = [
   { text: "const engineer = {", color: "text-blue-400", delay: 0.5 },
-  { text: '  name: "Karthikeyan Aruldoss",', color: "text-emerald-400", delay: 0.65 },
-  { text: '  role: "Full-Stack Engineer",', color: "text-emerald-400", delay: 0.8 },
-  { text: "  stack: [", color: "text-gray-400", delay: 0.95 },
-  { text: '    "React", "Next.js",', color: "text-amber-300", delay: 1.1 },
-  { text: '    "NestJS", "MongoDB",', color: "text-amber-300", delay: 1.22 },
-  { text: '    "Python",', color: "text-yellow-400", delay: 1.34 },
-  { text: "  ],", color: "text-gray-400", delay: 1.46 },
-  { text: "  ai: [", color: "text-gray-400", delay: 1.58 },
-  { text: '    "LLMs", "RAG", "Agents"', color: "text-rose-300", delay: 1.7 },
-  { text: "  ],", color: "text-gray-400", delay: 1.82 },
-  { text: '  available: true', color: "text-cyan-400", delay: 1.94 },
-  { text: "}", color: "text-blue-400", delay: 2.06 },
+  { text: '  role: "AI Full-Stack SSE",', color: "text-emerald-400", delay: 0.65 },
+  { text: "  ai: [", color: "text-gray-400", delay: 0.8 },
+  { text: '    "LLMs", "RAG",', color: "text-rose-300", delay: 0.95 },
+  { text: '    "Agents"', color: "text-rose-300", delay: 1.1 },
+  { text: "  ],", color: "text-gray-400", delay: 1.22 },
+  { text: '  stack: ["React", "NestJS"]', color: "text-amber-300", delay: 1.34 },
+  { text: '  available: true', color: "text-cyan-400", delay: 1.46 },
+  { text: "}", color: "text-blue-400", delay: 1.58 },
 ];
 
 const titles = [
-  "Senior Associate SDE",
-  "Full-Stack Developer",
-  "Full-Stack Cybersecurity Engineer",
-  "AI & ML Enthusiast",
+  "AI-Focused Full-Stack Engineer",
+  "AWS Certified Solutions Architect",
+  "Senior Software Engineer",
+  "LLMs, RAG & Product Systems",
 ];
 
-/* ─── 3D Floating Dashboard ────────────────────────────────── */
-function FloatingDashboard({ mx, my }: { mx: number; my: number }) {
+function PortraitStage({ mx, my }: { mx: number; my: number }) {
   return (
     <motion.div
-      className="relative w-full h-full px-8 py-2"
+      className="relative w-full max-w-[440px] mx-auto h-[420px] sm:h-[520px] lg:h-[580px]"
       style={{ transformStyle: "preserve-3d" }}
-      animate={{ rotateY: mx * 6, rotateX: -my * 4 }}
+      animate={{ rotateY: mx * 5, rotateX: -my * 3 }}
       transition={{ type: "spring", stiffness: 80, damping: 25 }}
     >
-      {/* ── Code Editor (top zone) ── */}
-      <motion.div
-        className="absolute left-8 right-8 top-4 bottom-[10.5rem] z-10 glass-card rounded-2xl overflow-hidden border border-white/8"
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          boxShadow: "0 25px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(59,130,246,0.08)",
-        }}
+      <div
+        className="absolute -inset-8 rounded-full bg-blue-600/20 blur-[80px] pointer-events-none"
+        aria-hidden
+      />
+      <div className="absolute -right-6 top-16 h-40 w-40 rounded-full bg-violet-600/20 blur-[60px] pointer-events-none" />
+
+      <div
+        className="relative h-full overflow-hidden rounded-[2rem] border border-white/10"
+        style={{ boxShadow: "0 30px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(59,130,246,0.12)" }}
       >
-        {/* Title bar */}
-        <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-white/6 bg-white/[0.03]">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
-          <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
-          <div className="ml-auto flex items-center gap-2 text-xs text-gray-600 font-mono">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-500/60" />
-            engineer.py
-          </div>
-        </div>
-
-        {/* Code content */}
-        <div className="p-3.5 font-mono text-[11px] space-y-0 bg-[#0d1117]">
-          {codeLines.map((line, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -8 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: line.delay, duration: 0.4 }}
-              className={`flex gap-2.5 leading-[1.35] ${line.color}`}
-            >
-              <span className="select-none text-gray-700 w-4 text-right shrink-0">
-                {i + 1}
-              </span>
-              <span>{line.text}</span>
-              {i === codeLines.length - 1 && (
-                <span className="cursor-blink text-blue-400/90 ml-0.5">█</span>
-              )}
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* ── Bottom row: Performance + Stack (no overlap) ── */}
-      <div className="absolute left-6 right-6 bottom-4 z-20 flex items-end justify-between gap-4 pointer-events-none">
-        {/* Performance */}
-        <motion.div
-          className="w-[11.5rem] shrink-0 glass-card rounded-xl border border-cyan-500/15 p-3 pointer-events-auto"
-          animate={{ y: [0, -6, 0] }}
-          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          style={{ boxShadow: "0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(34,211,238,0.06)" }}
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-5 h-5 rounded-lg bg-cyan-500/20 flex items-center justify-center">
-              <Activity className="w-3 h-3 text-cyan-400" />
-            </div>
-            <span className="text-[10px] text-cyan-400 font-mono font-medium">Performance</span>
-          </div>
-          <div className="space-y-2">
-            {[
-              { label: "API Latency", value: "~120ms", pct: 90, color: "from-cyan-500 to-blue-500" },
-              { label: "Uptime SLA", value: "99.9%", pct: 99, color: "from-green-500 to-cyan-500" },
-              { label: "Test Coverage", value: "87%", pct: 87, color: "from-blue-500 to-violet-500" },
-            ].map((m) => (
-              <div key={m.label}>
-                <div className="flex justify-between text-[10px] mb-0.5">
-                  <span className="text-gray-600">{m.label}</span>
-                  <span className="text-white font-mono font-medium">{m.value}</span>
-                </div>
-                <div className="h-0.5 bg-white/5 rounded-full overflow-hidden">
-                  <motion.div
-                    className={`h-full bg-gradient-to-r ${m.color} rounded-full`}
-                    initial={{ width: 0 }}
-                    animate={{ width: `${m.pct}%` }}
-                    transition={{ delay: 2, duration: 1, ease: "easeOut" }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Stack */}
-        <motion.div
-          className="w-[13rem] shrink-0 glass-card rounded-xl border border-blue-500/15 p-3 pointer-events-auto"
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          style={{ boxShadow: "0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(59,130,246,0.06)" }}
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-5 h-5 rounded-lg bg-blue-500/20 flex items-center justify-center">
-              <Layers className="w-3 h-3 text-blue-400" />
-            </div>
-            <span className="text-[10px] text-gray-400 font-mono font-medium">Stack</span>
-            <div className="ml-auto w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-          </div>
-          <div className="grid grid-cols-2 gap-x-2 gap-y-1.5">
-            {[
-              { layer: "React", dot: "bg-blue-400", w: "85%" },
-              { layer: "NestJS", dot: "bg-violet-400", w: "78%" },
-              { layer: "MongoDB", dot: "bg-emerald-400", w: "72%" },
-              { layer: "Python", dot: "bg-yellow-400", w: "80%" },
-              { layer: "AI / ML", dot: "bg-rose-400", w: "75%", span: true },
-            ].map((l) => (
-              <div key={l.layer} className={l.span ? "col-span-2" : undefined}>
-                <div className="flex items-center gap-1.5 mb-0.5">
-                  <div className={`w-1 h-1 rounded-full ${l.dot}`} />
-                  <span className="text-[10px] text-gray-400 font-mono truncate">{l.layer}</span>
-                </div>
-                <div className="h-0.5 bg-white/5 rounded-full overflow-hidden">
-                  <motion.div
-                    className={`h-full rounded-full ${l.dot}`}
-                    style={{ opacity: 0.7 }}
-                    initial={{ width: 0 }}
-                    animate={{ width: l.w }}
-                    transition={{ delay: 2, duration: 0.8, ease: "easeOut" }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+        <ProtectedPhoto src="/portrait.jpg" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0B0F19]/40 via-transparent to-transparent lg:from-transparent" />
       </div>
 
-      {/* ── Status badge ── */}
       <motion.div
-        className="absolute top-0 right-10 z-30 glass-card rounded-full border border-green-500/25 px-3 py-1.5 flex items-center gap-2"
+        className="absolute top-5 right-5 z-20 glass-card rounded-full border border-green-500/25 px-3 py-1.5 flex items-center gap-2"
         animate={{ scale: [1, 1.04, 1] }}
         transition={{ duration: 2.5, repeat: Infinity }}
         style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.3), 0 0 15px rgba(34,197,94,0.12)" }}
@@ -183,27 +70,35 @@ function FloatingDashboard({ mx, my }: { mx: number; my: number }) {
         <span className="text-xs text-green-400 font-mono">open to work</span>
       </motion.div>
 
-      {/* ── Service nodes (outer ring — clear of cards) ── */}
-      {[
-        { icon: Shield, label: "Security", pos: "top-[20%] -right-1", color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/20" },
-        { icon: Zap, label: "API", pos: "top-[48%] -right-1", color: "text-violet-400", bg: "bg-violet-500/10", border: "border-violet-500/20" },
-        { icon: Database, label: "DB", pos: "top-[32%] -left-1", color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/20" },
-      ].map(({ icon: Icon, label, pos, color, bg, border }) => (
-        <motion.div
-          key={label}
-          className={`absolute ${pos} z-[5] flex flex-col items-center gap-1`}
-          animate={{ y: [0, -4, 0] }}
-          transition={{ duration: 4 + label.length * 0.5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <div
-            className={`w-8 h-8 rounded-lg ${bg} border ${border} flex items-center justify-center`}
-            style={{ boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}
-          >
-            <Icon className={`w-3.5 h-3.5 ${color}`} />
-          </div>
-          <span className={`text-[9px] font-mono ${color}`}>{label}</span>
-        </motion.div>
-      ))}
+      <a
+        href="#certifications"
+        className="absolute top-16 right-5 z-20 glass-card rounded-full border border-amber-500/30 px-3 py-1.5 flex items-center gap-2 text-xs text-amber-400 font-mono hover:border-amber-400/50 transition-colors"
+        style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.3), 0 0 12px rgba(245,158,11,0.12)" }}
+      >
+        AWS SAA-C03
+      </a>
+
+      <motion.div
+        className="absolute -left-3 sm:-left-8 bottom-8 z-20 w-[min(100%,18.5rem)] glass-card rounded-2xl overflow-hidden border border-white/10"
+        animate={{ y: [0, -8, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        style={{ boxShadow: "0 20px 50px rgba(0,0,0,0.45)" }}
+      >
+        <div className="flex items-center gap-1.5 px-3 py-2 border-b border-white/6 bg-white/[0.03]">
+          <div className="w-2 h-2 rounded-full bg-red-500/70" />
+          <div className="w-2 h-2 rounded-full bg-yellow-500/70" />
+          <div className="w-2 h-2 rounded-full bg-green-500/70" />
+          <span className="ml-auto text-[10px] text-gray-600 font-mono">engineer.ts</span>
+        </div>
+        <div className="p-3 font-mono text-[10px] sm:text-[11px] bg-[#0d1117]/90">
+          {codeLines.map((line, i) => (
+            <div key={i} className={`flex gap-2 leading-[1.45] ${line.color}`}>
+              <span className="select-none text-gray-700 w-3 text-right shrink-0">{i + 1}</span>
+              <span className="truncate">{line.text}</span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
     </motion.div>
   );
 }
@@ -301,7 +196,7 @@ export function Hero() {
 
       {/* Main content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-20 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center min-h-[82vh]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[82vh]">
 
           {/* ── Left column ── */}
           <div className="space-y-7">
@@ -363,8 +258,8 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="text-gray-400 text-lg max-w-xl leading-relaxed"
             >
-              I build scalable web platforms, developer tools and startup products —{" "}
-              <span className="text-white font-medium">from idea to production.</span>
+              I ship AI into production full-stack systems — LLMs, RAG, and agents on React and NestJS.{" "}
+              <span className="text-white font-medium">Senior Software Engineer, end to end.</span>
             </motion.p>
 
             {/* CTA Buttons */}
@@ -439,14 +334,14 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* ── Right column — 3D Dashboard ── */}
+          {/* ── Right column — portrait ── */}
           <motion.div
-            initial={{ opacity: 0, x: 50, scale: 0.96 }}
+            initial={{ opacity: 0, x: 40, scale: 0.97 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="relative h-[500px] hidden lg:block perspective-1000"
+            transition={{ duration: 1.1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="relative order-first lg:order-none pt-4 lg:pt-0"
           >
-            <FloatingDashboard mx={dashX} my={dashY} />
+            <PortraitStage mx={dashX} my={dashY} />
           </motion.div>
         </div>
 

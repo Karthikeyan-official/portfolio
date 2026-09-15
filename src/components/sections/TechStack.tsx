@@ -6,6 +6,20 @@ import { FadeInView } from "@/components/animations/FadeInView";
 
 const categories = [
   {
+    name: "AI",
+    icon: "✦",
+    color: "#EC4899",
+    gradClass: "from-rose-500 to-violet-400",
+    borderClass: "border-rose-500/20",
+    glowColor: "rgba(244,63,94,0.12)",
+    techs: [
+      { name: "LLMs", level: 86, icon: "✦" },
+      { name: "RAG", level: 84, icon: "📚" },
+      { name: "Agents", level: 80, icon: "◎" },
+      { name: "Python", level: 82, icon: "🐍" },
+    ],
+  },
+  {
     name: "Frontend",
     icon: "⚛",
     color: "#3B82F6",
@@ -68,6 +82,7 @@ const categories = [
 ];
 
 const extraTechs = [
+  "OpenAI", "Embeddings", "LangChain",
   "GSAP", "Three.js", "Prisma", "JWT Auth", "OAuth", "Swagger",
   "Jest", "Postman", "Figma", "Vercel", "PM2", "Nginx",
   "Linux", "Git", "GitHub Actions",
@@ -133,11 +148,11 @@ export function TechStack() {
             <span className="text-gradient-violet">Trade</span>
           </h2>
           <p className="text-gray-500 text-lg max-w-xl mx-auto">
-            A carefully curated arsenal of technologies I use to ship world-class products.
+            The stack I use to ship AI-backed full-stack products.
           </p>
         </FadeInView>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-5 mb-8">
           {categories.map((cat, ci) => (
             <FadeInView key={cat.name} delay={ci * 0.09} direction="up">
               <div

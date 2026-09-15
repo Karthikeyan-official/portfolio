@@ -22,7 +22,7 @@ type JobExperience = {
 
 const experiences: JobExperience[] = [
   {
-    role: "Senior Associate SDE",
+    role: "Senior Software Engineer",
     company: "Crossbow Cybersecurity",
     period: "Jan 2026 — Present",
     duration: "Current",
@@ -289,7 +289,7 @@ export function Experience() {
             <span className="text-gradient-blue">History</span>
           </h2>
           <p className="text-gray-500 text-lg">
-            4+ years building cybersecurity SaaS, full-stack products, and enterprise solutions.
+            4+ years building cybersecurity SaaS — full-stack product, now with AI in the same systems.
           </p>
         </FadeInView>
 

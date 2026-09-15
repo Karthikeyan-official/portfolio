@@ -18,9 +18,9 @@ const highlights = [
   },
   {
     icon: Brain,
-    title: "Product-Thinking Mindset",
+    title: "AI in the product loop",
     description:
-      "I don't just write code — I think about user impact, business outcomes and system scalability before every feature.",
+      "I treat models like another production dependency: retrieval, evals, fallbacks, and a UI that security teams can trust.",
     gradient: "from-violet-500 to-purple-400",
     border: "border-violet-500/20",
     glow: "rgba(139,92,246,0.1)",
@@ -39,11 +39,11 @@ const highlights = [
 ];
 
 const specs = [
-  { label: "Scalable Backend Systems", icon: "⚡" },
-  { label: "Clean Frontend Interfaces", icon: "🎨" },
-  { label: "Fast Feature Shipping", icon: "🚀" },
-  { label: "Product Architecture", icon: "🏗️" },
-  { label: "Performance Optimization", icon: "📈" },
+  { label: "LLMs, RAG & Agents", icon: "✦" },
+  { label: "AWS Solutions Architect", icon: "☁" },
+  { label: "Production Full-Stack", icon: "⚡" },
+  { label: "NestJS & React", icon: "⚛" },
+  { label: "Cybersecurity SaaS", icon: "🛡" },
   { label: "API Design", icon: "🔌" },
 ];
 
@@ -87,7 +87,7 @@ export function About() {
             <span className="text-gradient-blue">Impact</span>
           </h2>
           <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-            Building products that matter, systems that scale, and experiences that delight.
+            Building products that matter — AI in the loop, systems that scale.
           </p>
         </FadeInView>
 
@@ -102,21 +102,21 @@ export function About() {
               >
                 <RevealText delay={0.05}>
                   <p className="text-gray-300 text-lg leading-relaxed">
-                    I&apos;m a full-stack engineer with{" "}
-                    <span className="text-white font-semibold">4+ years of experience</span>{" "}
-                    building production-grade cybersecurity SaaS and full-stack products.
+                    I&apos;m an AI-focused full-stack{" "}
+                    <span className="text-white font-semibold">Senior Software Engineer</span>{" "}
+                    with 4+ years shipping cybersecurity SaaS — and putting LLMs, RAG, and agents into those products.
                   </p>
                 </RevealText>
 
                 <RevealText delay={0.12}>
                   <p className="text-gray-500 text-sm leading-relaxed">
-                    I specialize in designing scalable backend architectures, crafting clean and intuitive frontend interfaces, and shipping features fast in product environments.
+                    I specialize in production AI on a full stack: retrieval, tool-calling agents, NestJS services, and React surfaces teams actually use.
                   </p>
                 </RevealText>
 
                 <RevealText delay={0.18}>
                   <p className="text-gray-500 text-sm leading-relaxed">
-                    I&apos;ve worked across multiple customer projects handling product architecture, feature development, and performance optimization — turning complex requirements into elegant, maintainable solutions.
+                    I&apos;ve owned product architecture, billing, RBAC, and the AI pieces that have to survive production — not just a notebook demo.
                   </p>
                 </RevealText>
 

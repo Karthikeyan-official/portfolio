@@ -13,6 +13,7 @@ const testimonials = [
     gradient: "from-blue-500 to-cyan-400",
     border: "rgba(59,130,246,0.18)",
     glow: "rgba(59,130,246,0.12)",
+    icon: "#60A5FA",
   },
   {
     quote: "The security platform he built reduced our compliance overhead dramatically. He understood both the technical requirements and the business implications from day one.",
@@ -22,6 +23,7 @@ const testimonials = [
     gradient: "from-violet-500 to-purple-400",
     border: "rgba(139,92,246,0.18)",
     glow: "rgba(139,92,246,0.12)",
+    icon: "#A78BFA",
   },
   {
     quote: "His Stripe integration work was excellent — clean, well-documented, and robust. The subscription platform handles edge cases I didn't even think of when we scoped the project.",
@@ -31,6 +33,7 @@ const testimonials = [
     gradient: "from-cyan-500 to-teal-400",
     border: "rgba(34,211,238,0.18)",
     glow: "rgba(34,211,238,0.12)",
+    icon: "#22D3EE",
   },
 ];
 
@@ -69,7 +72,7 @@ export function Testimonials() {
               }}
               transition={{ type: "spring", stiffness: 250, damping: 20 }}
             >
-              <Quote className="w-7 h-7 text-gray-800 mb-5 shrink-0" />
+              <Quote className="w-7 h-7 mb-5 shrink-0" style={{ color: t.icon }} />
               <p className="text-gray-300 text-sm leading-relaxed flex-1 mb-6 italic">
                 &ldquo;{t.quote}&rdquo;
               </p>

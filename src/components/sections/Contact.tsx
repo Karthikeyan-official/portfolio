@@ -90,7 +90,7 @@ export function Contact() {
           </h2>
 
           <p className="text-gray-500 text-xl max-w-xl mx-auto mb-10 leading-relaxed">
-            Open to senior full-stack, product engineer, or startup engineering roles. Let&apos;s talk.
+            Open to senior roles where AI meets full-stack product — LLMs, RAG, and systems that have to stay up. Let&apos;s talk.
           </p>
 
           <motion.a

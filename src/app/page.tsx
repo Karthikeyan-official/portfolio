@@ -29,6 +29,9 @@ const EngineeringHighlights = dynamic(() =>
 const Experience = dynamic(() =>
   import("@/components/sections/Experience").then((m) => ({ default: m.Experience }))
 );
+const Certifications = dynamic(() =>
+  import("@/components/sections/Certifications").then((m) => ({ default: m.Certifications }))
+);
 const Publications = dynamic(() =>
   import("@/components/sections/Publications").then((m) => ({ default: m.Publications }))
 );
@@ -63,6 +66,8 @@ export default function Home() {
       <EngineeringHighlights />
       <SectionDivider />
       <Experience />
+      <SectionDivider />
+      <Certifications />
       <SectionDivider />
       <Publications />
       <SectionDivider />

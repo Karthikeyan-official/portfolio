@@ -17,25 +17,32 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Karthikeyan Aruldoss — Senior Associate SDE",
+  metadataBase: new URL("https://karthikeyan-official.github.io/portfolio"),
+  title: "Karthikeyan Aruldoss — AI-Focused Full-Stack Senior Software Engineer",
   description:
-    "Senior Associate SDE specializing in cybersecurity SaaS, MERN stack platforms, and AI/ML research. 4+ years building production-grade systems.",
+    "AI-focused full-stack Senior Software Engineer. I ship LLMs, RAG, and agents into production cybersecurity SaaS — React, NestJS, and Python.",
   keywords: [
-    "Full-Stack Engineer",
+    "AI Full-Stack Engineer",
+    "Senior Software Engineer",
+    "LLMs",
+    "RAG",
     "React",
     "Next.js",
-    "Node.js",
-    "TypeScript",
-    "Product Engineer",
+    "NestJS",
     "Karthikeyan",
   ],
   authors: [{ name: "Karthikeyan Aruldoss" }],
   openGraph: {
-    title: "Karthikeyan Aruldoss — Senior Associate SDE",
+    title: "Karthikeyan Aruldoss — AI-Focused Full-Stack Senior Software Engineer",
     description:
-      "Senior Associate SDE specializing in cybersecurity SaaS, MERN stack platforms, and AI/ML research.",
+      "AI-focused full-stack Senior Software Engineer shipping LLMs, RAG, and production SaaS.",
     type: "website",
     locale: "en_US",
+    images: ["/apple-icon.png"],
+  },
+  icons: {
+    icon: [{ url: "/favicon.png", type: "image/png" }],
+    apple: "/apple-icon.png",
   },
   robots: {
     index: true,

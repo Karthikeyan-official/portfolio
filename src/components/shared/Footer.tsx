@@ -3,12 +3,14 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, ArrowUp } from "lucide-react";
 import { SITE } from "@/lib/site";
+import { ProtectedPhoto } from "@/components/shared/ProtectedPhoto";
 
 const navLinks = [
   { label: "About", href: "about" },
   { label: "Projects", href: "projects" },
   { label: "Skills", href: "skills" },
   { label: "Experience", href: "experience" },
+  { label: "Certs", href: "certifications" },
   { label: "Publications", href: "publications" },
   { label: "Contact", href: "contact" },
 ];
@@ -39,21 +41,18 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2.5 mb-4">
-              <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white"
-                style={{
-                  background: "linear-gradient(135deg, #3B82F6, #8B5CF6)",
-                  boxShadow: "0 0 14px rgba(59,130,246,0.3)",
-                }}
+              <span
+                className="relative h-8 w-8 shrink-0 overflow-hidden rounded-lg ring-1 ring-white/20"
+                style={{ boxShadow: "0 0 14px rgba(59,130,246,0.3)" }}
               >
-                K
-              </div>
-              <span className="font-semibold text-white">
+                <ProtectedPhoto src="/portrait.jpg" position="center center" />
+              </span>
+              <span className="font-semibold text-white leading-none">
                 Karthikeyan<span className="text-gradient-blue">.dev</span>
               </span>
             </div>
             <p className="text-sm text-gray-600 leading-relaxed max-w-xs">
-              Senior Full-Stack Engineer building scalable platforms, developer tools, and startup products.
+              AI-focused full-stack Senior Software Engineer. I put LLMs, RAG, and agents into real products — not demos.
             </p>
             <div className="flex items-center gap-2 mt-4">
               <span className="relative flex h-1.5 w-1.5">
