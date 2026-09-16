@@ -1,6 +1,6 @@
 # Karthikeyan Aruldoss — React Portfolio
 
-A responsive dark, premium personal portfolio based on the supplied portfolio design.
+Live site: **https://karthikeyan-official.github.io/portfolio/**
 
 ## Run locally
 
@@ -9,7 +9,12 @@ npm install
 npm run dev
 ```
 
-Then open the Vite URL shown in the terminal.
+## Deploy to GitHub Pages
+
+```bash
+npm run build
+npx gh-pages -d dist
+```
 
 ## Production build
 
@@ -22,24 +27,15 @@ npm run preview
 
 All portfolio assets are in `public/assets/`.
 
-- `profile.png` — supplied professional portrait
-- `portfolio-reference.png` — 4K generated visual reference
-- `featured-projects-reference.png` — 4K project visual reference
-- `tech-stack-reference.png` — 4K tech-stack visual reference
-- `.ico` files — technology/logo assets
-
 ## Resume
 
 Put your PDF at:
 
 `public/resume.pdf`
 
-The Resume button will then download it.
+Then rebuild and redeploy. The Resume button uses that file.
 
 ## Personal links
 
-The LinkedIn URL is already configured:
-
-https://www.linkedin.com/in/karthikeyan-aruldoss/
-
-Update GitHub, email, project links and experience copy in `src/App.jsx` as needed.
+- LinkedIn: https://www.linkedin.com/in/karthikeyan-aruldoss/
+- GitHub: https://github.com/Karthikeyan-official/portfolio
