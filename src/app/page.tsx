@@ -2,14 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Mail, Menu, X } from "lucide-react";
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { ProtectedPhoto } from "@/components/shared/ProtectedPhoto";
 import { SITE } from "@/lib/site";
 import { profile } from "@/lib/profile";
 import { useSmoothScroll } from "@/components/shared/SmoothScrollProvider";
 
-const ease = [0.16, 1, 0.3, 1] as const;
 const nav = [
   ["Work", "work"],
   ["Experience", "experience"],
@@ -60,15 +57,16 @@ export default function Home() {
     <main className="min-h-screen bg-[#e8edf3] text-[#16202b]">
       <header className="sticky top-0 z-40 border-b border-[#d3dbe4] bg-[#e8edf3]/90 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <button type="button" onClick={() => scrollTo(0)} className="flex items-center gap-2.5 text-sm font-medium tracking-tight">
+          <button type="button" onClick={() => scrollTo(0)} className="flex min-w-0 items-center gap-2.5 text-sm font-medium tracking-tight">
             <Image
               src="/assets/logo.png"
               alt="KA"
-              width={116}
-              height={64}
-              className="h-8 w-auto"
+              width={820}
+              height={454}
+              className="h-8 w-auto max-w-[92px] shrink-0 object-contain"
+              style={{ height: 32, width: "auto" }}
             />
-            Karthikeyan Aruldoss
+            <span className="truncate">Karthikeyan Aruldoss</span>
           </button>
           <nav className="hidden items-center gap-1 md:flex">
             {nav.map(([label, id]) => (
@@ -101,7 +99,7 @@ export default function Home() {
       </header>
 
       <section className="mx-auto grid max-w-6xl items-center gap-14 px-6 pb-8 pt-14 lg:grid-cols-[1.1fr_0.9fr] lg:pt-20">
-        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.15, ease }}>
+        <div>
           <p className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs text-[#5c6b7c] shadow-[0_1px_0_rgba(22,32,43,0.06)]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#2f7d4a]" />
             Open to senior roles · Chennai
@@ -119,17 +117,17 @@ export default function Home() {
               <Mail className="h-4 w-4" strokeWidth={1.5} /> Email
             </a>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.figure
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.35, delay: 0.18, ease }}
-          className="overflow-hidden rounded-2xl bg-white shadow-[0_20px_50px_rgba(22,32,43,0.08)]"
-        >
-          <div className="relative aspect-[4/5]">
-            <ProtectedPhoto src="/portrait.jpg" />
-          </div>
+        <figure className="overflow-hidden rounded-2xl bg-white shadow-[0_20px_50px_rgba(22,32,43,0.08)]">
+          <Image
+            src="/portrait.jpg"
+            alt="Karthikeyan Aruldoss"
+            width={800}
+            height={1000}
+            priority
+            className="aspect-[4/5] w-full object-cover object-[center_15%]"
+          />
           <figcaption className="grid grid-cols-3 divide-x divide-[#e4ebf1] border-t border-[#e4ebf1] text-center">
             {profile.stats.slice(0, 3).map(([value, label]) => (
               <div key={label} className="px-2 py-3">
@@ -138,20 +136,20 @@ export default function Home() {
               </div>
             ))}
           </figcaption>
-        </motion.figure>
+        </figure>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid gap-10 rounded-2xl bg-white p-8 shadow-[0_1px_0_rgba(22,32,43,0.04)] lg:grid-cols-12 lg:p-10">
-          <p className="text-sm text-[#5c6b7c] lg:col-span-3">About</p>
-          <div className="lg:col-span-9">
-            <p className="text-[28px] font-medium leading-snug tracking-[-0.02em] sm:text-[32px]">
-              Four years in cybersecurity SaaS, from the schema to the screen a security team opens every morning.
+        <div className="rounded-2xl bg-white p-8 shadow-[0_1px_0_rgba(22,32,43,0.04)] lg:p-10">
+          <p className="text-sm text-[#5c6b7c]">About</p>
+          <p className="mt-4 max-w-3xl text-[28px] font-medium leading-snug tracking-[-0.02em] sm:text-[32px]">
+            Four years in cybersecurity SaaS, from the schema to the screen a security team opens every morning.
+          </p>
+          <div className="mt-6 grid gap-8 lg:grid-cols-2">
+            <p className="leading-7 text-[#526272]">
+              Models sit next to the rest of the stack. Retrieval, evals, and fallbacks have to fail the same way a payment webhook fails: visibly, and with a path back. The other half is billing, access control, and releases while the scope is still moving.
             </p>
-            <p className="mt-4 max-w-2xl leading-7 text-[#526272]">
-              Models sit next to the rest of the stack. Retrieval, evals, and fallbacks have to fail the same way a payment webhook fails: visibly, and with a path back.
-            </p>
-            <ul className="mt-6 flex flex-wrap gap-2">
+            <ul className="flex flex-wrap content-start gap-2">
               {profile.specs.map((item) => (
                 <li key={item} className="rounded-full bg-[#e8edf3] px-3 py-1.5 text-sm">{item}</li>
               ))}
