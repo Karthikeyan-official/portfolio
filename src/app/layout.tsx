@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, Newsreader } from "next/font/google";
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/shared/SmoothScrollProvider";
 import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
@@ -12,15 +12,17 @@ const inter = Inter({
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
+  style: ["normal", "italic"],
   variable: "--font-mono",
   display: "swap",
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://karthikeyan-official.github.io/portfolio"),
-  title: "Karthikeyan Aruldoss — AI-Focused Full-Stack Senior Software Engineer",
+  title: "Karthikeyan Aruldoss — Senior Full-Stack Engineer | LLMs, RAG, Cybersecurity SaaS",
   description:
-    "AI-focused full-stack Senior Software Engineer. I ship LLMs, RAG, and agents into production cybersecurity SaaS — React, NestJS, and Python.",
+    "Senior full-stack engineer in Chennai. I ship LLMs, RAG, and agents into production cybersecurity SaaS with React, NestJS, and Python.",
   keywords: [
     "AI Full-Stack Engineer",
     "Senior Software Engineer",
@@ -33,9 +35,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Karthikeyan Aruldoss" }],
   openGraph: {
-    title: "Karthikeyan Aruldoss — AI-Focused Full-Stack Senior Software Engineer",
+    title: "Karthikeyan Aruldoss — Senior Full-Stack Engineer | LLMs, RAG, Cybersecurity SaaS",
     description:
-      "AI-focused full-stack Senior Software Engineer shipping LLMs, RAG, and production SaaS.",
+      "Senior full-stack engineer shipping LLMs, RAG, and agents into production cybersecurity SaaS.",
     type: "website",
     locale: "en_US",
     images: ["/apple-icon.png"],
@@ -57,7 +59,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="bg-background text-white antialiased font-sans">
+      <body className="bg-[#e8edf3] text-[#16202b] antialiased font-sans">
         <a
           href="#hero"
           className="sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-blue-600 focus:text-white focus:text-sm focus:w-auto focus:h-auto focus:m-0 focus:overflow-visible focus:whitespace-normal"

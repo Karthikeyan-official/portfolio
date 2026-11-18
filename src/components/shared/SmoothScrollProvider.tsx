@@ -1,41 +1,51 @@
 "use client";
 
-import { useEffect } from "react";
+import { createContext, useContext, useEffect, useRef } from "react";
 import Lenis from "lenis";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import "lenis/dist/lenis.css";
 
-gsap.registerPlugin(ScrollTrigger);
+type ScrollApi = {
+  scrollTo: (target: string | number) => void;
+};
+
+const ScrollContext = createContext<ScrollApi>({
+  scrollTo: () => {},
+});
+
+export function useSmoothScroll() {
+  return useContext(ScrollContext);
+}
 
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
+  const lenisRef = useRef<Lenis | null>(null);
+
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.4,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 2.2,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
-      wheelMultiplier: 0.9,
-      touchMultiplier: 1.8,
-      infinite: false,
+      wheelMultiplier: 0.55,
+      touchMultiplier: 0.8,
     });
+    lenisRef.current = lenis;
 
-    /* Feed Lenis time into GSAP ScrollTrigger */
-    lenis.on("scroll", () => ScrollTrigger.update());
-
-    const rafId = { current: 0 };
-    function raf(time: number) {
+    let frame = 0;
+    const raf = (time: number) => {
       lenis.raf(time);
-      rafId.current = requestAnimationFrame(raf);
-    }
-    rafId.current = requestAnimationFrame(raf);
-
-    /* Make lenis play nicely with GSAP ticker */
-    gsap.ticker.lagSmoothing(0);
+      frame = requestAnimationFrame(raf);
+    };
+    frame = requestAnimationFrame(raf);
 
     return () => {
-      cancelAnimationFrame(rafId.current);
+      cancelAnimationFrame(frame);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
-  return <>{children}</>;
+  const scrollTo = (target: string | number) => {
+    lenisRef.current?.scrollTo(target, { offset: -8, duration: 1.8 });
+  };
+
+  return <ScrollContext.Provider value={{ scrollTo }}>{children}</ScrollContext.Provider>;
 }

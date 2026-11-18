@@ -18,9 +18,9 @@ export function FadeInView({
   className,
   delay = 0,
   direction = "up",
-  duration = 0.65,
+  duration = 0.4,
   once = true,
-  distance = 36,
+  distance = 12,
 }: FadeInViewProps) {
   const offsets = {
     up:    { y: distance, x: 0 },
