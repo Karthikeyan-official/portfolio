@@ -20,14 +20,19 @@ const newsreader = Newsreader({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://karthikeyan-official.github.io/portfolio"),
-  title: "Karthikeyan Aruldoss — Senior Full-Stack Engineer | LLMs, RAG, Cybersecurity SaaS",
+  title: "Karthikeyan Aruldoss — AI Engineer and Senior Full-Stack Engineer | LLMs, RAG, Cybersecurity",
   description:
-    "Senior full-stack engineer in Chennai. I ship LLMs, RAG, and agents into production cybersecurity SaaS with React, NestJS, and Python.",
+    "AI engineer and senior full-stack engineer in Chennai. I ship LLMs, RAG, and agents into production cybersecurity SaaS with React, NestJS, and Python.",
   keywords: [
+    "AI Engineer",
     "AI Full-Stack Engineer",
     "Senior Software Engineer",
     "LLMs",
     "RAG",
+    "AI agents",
+    "Embeddings",
+    "Vector search",
+    "LLM evals",
     "React",
     "Next.js",
     "NestJS",
@@ -35,9 +40,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Karthikeyan Aruldoss" }],
   openGraph: {
-    title: "Karthikeyan Aruldoss — Senior Full-Stack Engineer | LLMs, RAG, Cybersecurity SaaS",
+    title: "Karthikeyan Aruldoss — AI Engineer and Senior Full-Stack Engineer | LLMs, RAG, Cybersecurity",
     description:
-      "Senior full-stack engineer shipping LLMs, RAG, and agents into production cybersecurity SaaS.",
+      "AI engineer shipping LLMs, RAG, and agents into production cybersecurity SaaS.",
     type: "website",
     locale: "en_US",
     images: ["/apple-icon.png"],

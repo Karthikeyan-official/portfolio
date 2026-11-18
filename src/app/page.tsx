@@ -105,8 +105,8 @@ export default function Home() {
             Open to senior roles · Chennai
           </p>
           <h1 className="mt-6 text-[44px] font-medium leading-[1.02] tracking-[-0.035em] sm:text-[64px]">
-            Senior full-stack engineer.
-            <span className="block text-[#23486a]">LLMs and RAG for cybersecurity SaaS.</span>
+            AI engineer.
+            <span className="block text-[#23486a]">Full-stack systems for LLMs, RAG, and cybersecurity SaaS.</span>
           </h1>
           <p className="mt-6 max-w-lg text-[17px] leading-8 text-[#526272]">{profile.line}</p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -143,7 +143,7 @@ export default function Home() {
         <div className="rounded-2xl bg-white p-8 shadow-[0_1px_0_rgba(22,32,43,0.04)] lg:p-10">
           <p className="text-sm text-[#5c6b7c]">About</p>
           <p className="mt-4 max-w-3xl text-[28px] font-medium leading-snug tracking-[-0.02em] sm:text-[32px]">
-            Four years in cybersecurity SaaS, from the schema to the screen a security team opens every morning.
+            AI engineer for four years of cybersecurity SaaS, from retrieval and agents to the screen a security team opens every morning.
           </p>
           <div className="mt-6 grid gap-8 lg:grid-cols-2">
             <p className="leading-7 text-[#526272]">
@@ -303,7 +303,7 @@ export default function Home() {
       <section className="bg-[#16202b] text-[#e8edf3]">
         <div className="mx-auto max-w-6xl px-6 py-20">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="text-4xl font-medium tracking-[-0.03em]">Side projects</h2>
+            <h2 className="text-4xl font-medium tracking-[-0.03em]">More AI work</h2>
             <a href={SITE.github} target="_blank" rel="noopener noreferrer" className="text-sm text-[#8fb4d4]">github.com/{SITE.githubHandle}</a>
           </div>
           <ul className="mt-8 grid gap-3 sm:grid-cols-2">
