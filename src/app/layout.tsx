@@ -18,6 +18,8 @@ const newsreader = Newsreader({
   adjustFontFallback: false,
 });
 
+const assetBase = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://karthikeyan-official.github.io/portfolio"),
   title: "Karthikeyan Aruldoss — AI Engineer and Senior Full-Stack Engineer | LLMs, RAG, Cybersecurity",
@@ -45,11 +47,11 @@ export const metadata: Metadata = {
       "AI engineer shipping LLMs, RAG, and agents into production cybersecurity SaaS.",
     type: "website",
     locale: "en_US",
-    images: ["/apple-icon.png"],
+    images: [`${assetBase}/apple-icon.png`],
   },
   icons: {
-    icon: [{ url: "/favicon.png", type: "image/png" }],
-    apple: "/apple-icon.png",
+    icon: [{ url: `${assetBase}/favicon.png`, type: "image/png" }],
+    apple: `${assetBase}/apple-icon.png`,
   },
   robots: {
     index: true,

@@ -7,6 +7,8 @@ import { SITE } from "@/lib/site";
 import { profile } from "@/lib/profile";
 import { useSmoothScroll } from "@/components/shared/SmoothScrollProvider";
 
+const asset = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${path}`;
+
 const nav = [
   ["Work", "work"],
   ["Experience", "experience"],
@@ -59,7 +61,7 @@ export default function Home() {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           <button type="button" onClick={() => scrollTo(0)} className="flex min-w-0 items-center gap-2.5 text-sm font-medium tracking-tight">
             <Image
-              src="/assets/logo.png"
+              src={asset("/assets/logo.png")}
               alt="KA"
               width={820}
               height={454}
@@ -121,7 +123,7 @@ export default function Home() {
 
         <figure className="overflow-hidden rounded-2xl bg-white shadow-[0_20px_50px_rgba(22,32,43,0.08)]">
           <Image
-            src="/portrait.jpg"
+            src={asset("/portrait.jpg")}
             alt="Karthikeyan Aruldoss"
             width={800}
             height={1000}
