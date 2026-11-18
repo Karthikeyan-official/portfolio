@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Mail, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { ProtectedPhoto } from "@/components/shared/ProtectedPhoto";
 import { SITE } from "@/lib/site";
 import { profile } from "@/lib/profile";
@@ -60,10 +61,12 @@ export default function Home() {
       <header className="sticky top-0 z-40 border-b border-[#d3dbe4] bg-[#e8edf3]/90 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           <button type="button" onClick={() => scrollTo(0)} className="flex items-center gap-2.5 text-sm font-medium tracking-tight">
-            <img
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/logo.png`}
-              alt=""
-              className="h-8 w-8 rounded-lg object-cover"
+            <Image
+              src="/assets/logo.png"
+              alt="KA"
+              width={116}
+              height={64}
+              className="h-8 w-auto"
             />
             Karthikeyan Aruldoss
           </button>

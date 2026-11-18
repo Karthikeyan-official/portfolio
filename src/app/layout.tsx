@@ -10,10 +10,10 @@ const inter = Inter({
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const newsreader = Newsreader({
   subsets: ["latin"],
   style: ["normal", "italic"],
-  variable: "--font-mono",
+  variable: "--font-display",
   display: "swap",
   adjustFontFallback: false,
 });
@@ -58,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${newsreader.variable}`}>
       <body className="bg-[#e8edf3] text-[#16202b] antialiased font-sans">
         <a
           href="#hero"
