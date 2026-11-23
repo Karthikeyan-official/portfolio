@@ -20,6 +20,7 @@ export default function Home() {
   const { scrollTo } = useSmoothScroll();
   const [menu, setMenu] = useState(false);
   const [active, setActive] = useState("work");
+  const [website, setWebsite] = useState("");
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
@@ -52,10 +53,10 @@ export default function Home() {
     setSending(true);
     setError("");
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/api/contact`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/api/contact/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, website }),
       });
       if (!res.ok) {
         const data = (await res.json().catch(() => null)) as { error?: string } | null;
@@ -92,6 +93,7 @@ export default function Home() {
                 key={id}
                 type="button"
                 onClick={() => go(id)}
+                aria-current={active === id ? "true" : undefined}
                 className={`rounded-lg px-3 py-2 text-sm transition-colors ${active === id ? "bg-white text-[#16202b]" : "text-[#5c6b7c] hover:text-[#16202b]"}`}
               >
                 {label}
@@ -112,11 +114,14 @@ export default function Home() {
                 {label}
               </button>
             ))}
+            <button type="button" onClick={() => go("contact")} className="mt-1 h-10 w-full rounded-lg bg-[#23486a] text-sm text-white">
+              Hire me
+            </button>
           </div>
         )}
       </header>
 
-      <section className="mx-auto grid max-w-6xl items-center gap-14 px-6 pb-8 pt-14 lg:grid-cols-[1.1fr_0.9fr] lg:pt-20">
+      <section id="hero" className="mx-auto grid max-w-6xl items-center gap-14 px-6 pb-8 pt-14 lg:grid-cols-[1.1fr_0.9fr] lg:pt-20">
         <div>
           <p className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs text-[#5c6b7c] shadow-[0_1px_0_rgba(22,32,43,0.06)]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#2f7d4a]" />
@@ -133,6 +138,9 @@ export default function Home() {
             </button>
             <a href={`mailto:${SITE.email}`} className="inline-flex h-12 items-center gap-2 rounded-lg bg-white px-5 text-sm shadow-[0_1px_0_rgba(22,32,43,0.06)] hover:bg-[#f7f9fb]">
               <Mail className="h-4 w-4" strokeWidth={1.5} /> Email
+            </a>
+            <a href={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/resume/`} className="inline-flex h-12 items-center rounded-lg px-2 text-sm text-[#23486a] hover:underline">
+              Résumé
             </a>
           </div>
         </div>
@@ -185,6 +193,14 @@ export default function Home() {
               <h3 className="mt-3 text-3xl font-medium tracking-tight">{lead.title}</h3>
               <p className="mt-4 max-w-xl leading-7 text-[#c5d0dc]">{lead.summary}</p>
               <p className="mt-6 text-sm text-[#d7e4f0]">{lead.result}</p>
+              <ol className="mt-6 grid gap-2 text-sm text-[#c5d0dc] sm:grid-cols-3">
+                {["Watch client-side scripts", "Catch unauthorized injections", "Alert from one dashboard"].map((step, index) => (
+                  <li key={step} className="rounded-xl bg-[#16202b] px-3 py-3">
+                    <span className="block text-xs text-[#8fb4d4]">0{index + 1}</span>
+                    {step}
+                  </li>
+                ))}
+              </ol>
             </div>
             <div className="flex flex-wrap content-end gap-2 lg:justify-end">
               {lead.stack.split(", ").map((item) => (
@@ -312,7 +328,7 @@ export default function Home() {
           {profile.quotes.map(([quote, who]) => (
             <figure key={who} className="flex flex-col rounded-2xl bg-white p-6">
               <blockquote className="flex-1 text-[15px] leading-7">“{quote}”</blockquote>
-              <figcaption className="mt-6 border-t border-[#e4ebf1] pt-4 text-xs text-[#5c6b7c]">{who}</figcaption>
+              <figcaption className="mt-6 border-t border-[#e4ebf1] pt-4 text-xs text-[#5c6b7c]">{who} · name withheld</figcaption>
             </figure>
           ))}
         </div>
@@ -321,7 +337,10 @@ export default function Home() {
       <section className="bg-[#16202b] text-[#e8edf3]">
         <div className="mx-auto max-w-6xl px-6 py-20">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="text-4xl font-medium tracking-[-0.03em]">More AI work</h2>
+            <div>
+              <h2 className="text-4xl font-medium tracking-[-0.03em]">Practice</h2>
+              <p className="mt-2 max-w-xl text-sm leading-6 text-[#c5d0dc]">Notes from retrieval, agents, and evals. These are not separate shipped products.</p>
+            </div>
             <a href={SITE.github} target="_blank" rel="noopener noreferrer" className="text-sm text-[#8fb4d4]">github.com/{SITE.githubHandle}</a>
           </div>
           <ul className="mt-8 grid gap-3 sm:grid-cols-2">
@@ -344,6 +363,7 @@ export default function Home() {
               ["Email", SITE.email, `mailto:${SITE.email}`],
               ["LinkedIn", SITE.linkedinLabel, SITE.linkedin],
               ["GitHub", `github.com/${SITE.githubHandle}`, SITE.github],
+              ["Résumé", "One page", `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/resume/`],
             ].map(([label, value, href]) => (
               <a key={label} href={href} className="flex items-center justify-between rounded-xl bg-white px-4 py-3 text-sm hover:bg-[#f7f9fb]">
                 <span>
@@ -369,6 +389,9 @@ export default function Home() {
                   Email
                   <input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-1.5 h-11 w-full rounded-lg border border-[#d3dbe4] px-3 text-sm outline-none focus:border-[#23486a]" />
                 </label>
+              </div>
+              <div className="absolute left-[-9999px] h-px w-px overflow-hidden" aria-hidden="true">
+                <input tabIndex={-1} autoComplete="off" aria-hidden="true" value={website} onChange={(e) => setWebsite(e.target.value)} />
               </div>
               <label className="block text-xs text-[#5c6b7c]">
                 Message

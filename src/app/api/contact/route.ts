@@ -1,10 +1,26 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { SITE } from "@/lib/site";
+import { thankYouEmail } from "@/lib/thankYouEmail";
 
 export const runtime = "nodejs";
 
 const MAX = { name: 120, email: 200, message: 5000 };
+const hits = new Map<string, number[]>();
+const WINDOW_MS = 10 * 60 * 1000;
+const MAX_HITS = 5;
+
+function limited(ip: string) {
+  const now = Date.now();
+  const recent = (hits.get(ip) ?? []).filter((time) => now - time < WINDOW_MS);
+  if (recent.length >= MAX_HITS) {
+    hits.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  hits.set(ip, recent);
+  return false;
+}
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -14,9 +30,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
-  const name = typeof (body as { name?: unknown }).name === "string" ? (body as { name: string }).name.trim() : "";
-  const email = typeof (body as { email?: unknown }).email === "string" ? (body as { email: string }).email.trim() : "";
-  const message = typeof (body as { message?: unknown }).message === "string" ? (body as { message: string }).message.trim() : "";
+  const record = body as { name?: unknown; email?: unknown; message?: unknown; website?: unknown };
+  if (typeof record.website === "string" && record.website.trim()) {
+    return NextResponse.json({ ok: true });
+  }
+
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
+  if (limited(ip)) {
+    return NextResponse.json({ error: "Too many messages. Please email me directly." }, { status: 429 });
+  }
+
+  const name = typeof record.name === "string" ? record.name.trim() : "";
+  const email = typeof record.email === "string" ? record.email.trim() : "";
+  const message = typeof record.message === "string" ? record.message.trim() : "";
 
   if (!name || !email || !message || name.length > MAX.name || email.length > MAX.email || message.length > MAX.message) {
     return NextResponse.json({ error: "Please check the form and try again." }, { status: 400 });
@@ -43,12 +69,21 @@ export async function POST(request: Request) {
   });
 
   try {
+    const thankYou = thankYouEmail(name);
     await transporter.sendMail({
       from: `"${SITE.name}" <${from}>`,
       to: SITE.email,
       replyTo: email,
       subject: `Portfolio inquiry from ${name}`,
       text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+    });
+    await transporter.sendMail({
+      from: `"${SITE.name}" <${from}>`,
+      to: email,
+      replyTo: SITE.email,
+      subject: thankYou.subject,
+      text: thankYou.text,
+      html: thankYou.html,
     });
   } catch {
     return NextResponse.json({ error: "Could not send the message. Please email me directly." }, { status: 502 });

@@ -47,7 +47,6 @@ export const metadata: Metadata = {
       "AI engineer shipping LLMs, RAG, and agents into production cybersecurity SaaS.",
     type: "website",
     locale: "en_US",
-    images: [`${assetBase}/apple-icon.png`],
   },
   icons: {
     icon: [{ url: `${assetBase}/favicon.png`, type: "image/png" }],
