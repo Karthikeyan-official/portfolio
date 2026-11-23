@@ -4,7 +4,8 @@ const basePath = isGithubPages ? `/${repo}` : "";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
+  // SMTP form handling needs a Node server. GitHub Pages builds stay static.
+  ...(isGithubPages ? { output: "export" } : {}),
   trailingSlash: true,
   basePath,
   assetPrefix: basePath || undefined,

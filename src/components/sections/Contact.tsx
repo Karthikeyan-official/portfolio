@@ -6,13 +6,29 @@ import { SITE } from "@/lib/site";
 export function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Portfolio inquiry from ${form.name}`);
-    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`);
-    window.location.href = `mailto:${SITE.email}?subject=${subject}&body=${body}`;
-    setSent(true);
+    setSending(true);
+    setError("");
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(data?.error || "Could not send the message.");
+      }
+      setSent(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not send the message.");
+    } finally {
+      setSending(false);
+    }
   };
 
   const field = "w-full rounded-xl border border-[#1a1814]/12 bg-white px-4 py-3 text-sm outline-none transition-colors placeholder:text-[#a3988c] focus:border-[#1a1814]";
@@ -33,7 +49,7 @@ export function Contact() {
         </div>
         <div className="rounded-3xl bg-white p-6 shadow-[0_16px_40px_rgba(26,24,20,0.05)] sm:p-8">
           {sent ? (
-            <p className="text-sm leading-7 text-[#3d3832]">Your mail app should open with the draft. I reply from {SITE.email}.</p>
+            <p className="text-sm leading-7 text-[#3d3832]">Message sent. I reply from {SITE.email}.</p>
           ) : (
             <form onSubmit={submit} className="space-y-4">
               <label className="block text-xs text-[#6b645c]">
@@ -48,8 +64,9 @@ export function Contact() {
                 Message
                 <textarea required rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={`${field} mt-1.5`} />
               </label>
-              <button type="submit" className="h-12 rounded-full bg-[#b8431f] px-6 text-sm text-white transition-colors hover:bg-[#9c3819]">
-                Send
+              {error ? <p className="text-sm text-[#8a3a2a]">{error}</p> : null}
+              <button type="submit" disabled={sending} className="h-12 rounded-full bg-[#b8431f] px-6 text-sm text-white transition-colors hover:bg-[#9c3819] disabled:opacity-60">
+                {sending ? "Sending…" : "Send"}
               </button>
             </form>
           )}

@@ -21,6 +21,8 @@ export default function Home() {
   const [menu, setMenu] = useState(false);
   const [active, setActive] = useState("work");
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
   useEffect(() => {
@@ -45,12 +47,26 @@ export default function Home() {
     scrollTo(`#${id}`);
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Portfolio inquiry from ${form.name}`);
-    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`);
-    window.location.href = `mailto:${SITE.email}?subject=${subject}&body=${body}`;
-    setSent(true);
+    setSending(true);
+    setError("");
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(data?.error || "Could not send the message.");
+      }
+      setSent(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not send the message.");
+    } finally {
+      setSending(false);
+    }
   };
 
   const [lead, ...rest] = profile.projects;
@@ -341,7 +357,7 @@ export default function Home() {
         </div>
         <div className="rounded-2xl bg-white p-6 sm:p-8">
           {sent ? (
-            <p className="text-sm leading-7 text-[#526272]">Your mail app should open with the draft. I reply from {SITE.email}.</p>
+            <p className="text-sm leading-7 text-[#526272]">Message sent. I reply from {SITE.email}.</p>
           ) : (
             <form onSubmit={submit} className="space-y-4">
               <div className="grid gap-4 sm:grid-cols-2">
@@ -358,7 +374,10 @@ export default function Home() {
                 Message
                 <textarea required rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="mt-1.5 w-full rounded-lg border border-[#d3dbe4] px-3 py-3 text-sm outline-none focus:border-[#23486a]" />
               </label>
-              <button type="submit" className="h-11 rounded-lg bg-[#23486a] px-5 text-sm text-white hover:bg-[#1b3a56]">Send</button>
+              {error ? <p className="text-sm text-[#8a3a2a]">{error}</p> : null}
+              <button type="submit" disabled={sending} className="h-11 rounded-lg bg-[#23486a] px-5 text-sm text-white hover:bg-[#1b3a56] disabled:opacity-60">
+                {sending ? "Sending…" : "Send"}
+              </button>
             </form>
           )}
         </div>
